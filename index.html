@@ -161,7 +161,7 @@
         }
 
         /* =========================================================
-           ✨ BARU: 5 PINTASAN SITUS DI BAWAH KOTAK PENCARIAN
+           ✨ 6 PINTASAN — IKON DIUBAH JADI DEFAULT, TAMBAH 1 LAGI
            ========================================================= */
         @keyframes munculDariBawah {
             0%   { opacity:0; transform: translateY(28px) scale(.92); }
@@ -170,18 +170,18 @@
 
         .wadah-pintasan {
             width: 100%;
-            max-width: 620px;
+            max-width: 700px; /* DIPERLEBAR SEKITAR UNTUK 6 ITEM */
             margin-top: clamp(26px, 5.5vh, 44px);
             display: grid;
-            grid-template-columns: repeat(5, 1fr); /* 5 kolom di layar lebar */
-            gap: clamp(10px, 2.2vw, 18px);
+            grid-template-columns: repeat(6, 1fr); /* ✅ UBAH: 6 KOLOM */
+            gap: clamp(8px, 2vw, 16px);
             justify-items: center;
             padding: 0 6px;
         }
 
-        /* RESPONSIF: otomatis ubah jumlah kolom */
-        @media (max-width: 560px){ .wadah-pintasan { grid-template-columns: repeat(3, 1fr); }}
-        @media (max-width: 360px){ .wadah-pintasan { grid-template-columns: repeat(2, 1fr); }}
+        /* ✅ RESPONSIF DIPERBAIKI UNTUK 6 ITEM */
+        @media (max-width: 640px){ .wadah-pintasan { grid-template-columns: repeat(3, 1fr); }}
+        @media (max-width: 380px){ .wadah-pintasan { grid-template-columns: repeat(2, 1fr); }}
 
         .pintasan {
             display: flex;
@@ -198,12 +198,12 @@
             transition: all .28s cubic-bezier(.2,.8,.2,1);
             will-change: transform;
         }
-        /* Muncul BERGILIRAN satu per satu */
         .pintasan:nth-child(1){ animation-delay: 1.25s; }
         .pintasan:nth-child(2){ animation-delay: 1.40s; }
         .pintasan:nth-child(3){ animation-delay: 1.55s; }
         .pintasan:nth-child(4){ animation-delay: 1.70s; }
         .pintasan:nth-child(5){ animation-delay: 1.85s; }
+        .pintasan:nth-child(6){ animation-delay: 2.00s; } /* ✅ BARU: URUTAN 6 */
 
         .pintasan:hover {
             transform: translateY(-7px) scale(1.04);
@@ -214,31 +214,26 @@
         .pintasan:active { transform: translateY(-2px) scale(.98); }
 
         .ikon-situs {
-            width:  clamp(42px, 10vw, 56px);
-            height: clamp(42px, 10vw, 56px);
+            width:  clamp(42px, 10vw, 54px);
+            height: clamp(42px, 10vw, 54px);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             box-shadow: 0 2px 6px rgba(0,0,0,.12);
-            transition: transform .3s ease, box-shadow .3s ease;
+            transition: transform .85s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease;
             flex-shrink: 0;
             overflow: hidden;
-            background: #fff;
+            background: #5f6368; /* ✅ WARNA DEFAULT STANDAR */
         }
         .ikon-situs svg { width:58%; height:58%; }
+
+        /* ANIMASI BERPUTAR TETAP SAMA PERSIS */
         .pintasan:hover .ikon-situs {
-            transform: rotate(-4deg) scale(1.08);
+            transform: rotate(360deg) scale(1.08);
             box-shadow: 0 6px 16px rgba(0,0,0,.18);
         }
-
-        /* WARNA RESMI TIAP BRAND */
-        .col-google    { background: conic-gradient(#4285F4,#34A853,#FBBC05,#EA4335,#4285F4); }
-        .col-youtube   { background: #FF0000; }
-        .col-facebook  { background: #1877F2; }
-        .col-instagram { background: linear-gradient(135deg,#833AB4,#FD1D1D,#F77737); }
-        .col-tiktok    { background: #000000; }
 
         .nama-situs {
             font-size: clamp(11.5px, 2.6vw, 13px);
@@ -250,7 +245,6 @@
             max-width: 100%;
         }
 
-        /* Kalau mau ganti pakai PNG sendiri */
         .ikon-situs img {
             width:100%; height:100%;
             object-fit: cover;
@@ -260,7 +254,7 @@
 </head>
 <body>
 
-    <!-- LOGO BESAR -->
+    <!-- LOGO BESAR — TETAP SAMA -->
     <div class="wadah-logo">
         <img 
             src="20260710_111613.png" 
@@ -273,7 +267,7 @@
         </h1>
     </div>
 
-    <!-- KOTAK PENCARIAN -->
+    <!-- KOTAK PENCARIAN — TETAP SAMA 100% -->
     <form class="form-cari" id="formCari" action="https://www.google.com/search" method="GET" target="_self">
 
         <img 
@@ -311,61 +305,73 @@
 
     </form>
 
-    <!-- ⭐⭐⭐ 5 PINTASAN SITUS KEREN ⭐⭐⭐ -->
+    <!-- ⭐⭐⭐ 6 PINTASAN — IKON DEFAULT + TAMBAH 1 SITUS ⭐⭐⭐ -->
     <div class="wadah-pintasan">
 
-        <!-- 1. GOOGLE -->
-        <a href="https://www.google.com" target="_blank" rel="noopener" class="pintasan">
-            <div class="ikon-situs col-google">
-                <svg viewBox="0 0 24 24" fill="white">
-                    <path d="M21.35 11.1H12v2.93h5.34c-.23 1.5-1.72 4.4-5.34 4.4-3.21 0-5.83-2.66-5.83-5.93S8.79 6.57 12 6.57c1.83 0 3.06.78 3.76 1.45l2.56-2.47C16.7 3.89 14.55 3 12 3 6.98 3 3 6.98 3 12s3.98 9 9 9c5.2 0 8.64-3.65 8.64-8.78 0-.59-.06-1.04-.14-1.12z"/>
+        <!-- SITUS 1 -->
+        <a href="https://data-cs.vercel.app/admin.html" target="_blank" rel="noopener" class="pintasan">
+            <div class="ikon-situs">
+                <!-- ✅ IKON DEFAULT BUMI / GLOBE -->
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.93 9h-3.17a15.7 15.7 0 00-1.34-5.32A8.02 8.02 0 0119.93 11zM12 3.87c1.32 0 2.94.88 3.82 2.84a13.8 13.8 0 01-1.1 4.29H9.28a13.8 13.8 0 01-1.1-4.29C9.06 4.75 10.68 3.87 12 3.87zm-4.52.94a15.7 15.7 0 00-1.34 5.32H2.99A8.02 8.02 0 017.48 4.81zM2.99 13h3.15c.12 1.9.62 3.68 1.34 5.19A8.02 8.02 0 012.99 13zm4.52 6.19a15.7 15.7 0 01-1.34-5.19h5.66a15.7 15.7 0 01-1.34 5.19c-.88.08-1.82.08-2.98 0zm4.49.94c-1.32 0-2.94-.88-3.82-2.84a13.8 13.8 0 011.1-4.29h5.46a13.8 13.8 0 01-1.1 4.29c-.88 1.96-2.5 2.84-3.82 2.84zm4.52-.94a15.7 15.7 0 01-1.34-5.19h3.15a8.02 8.02 0 01-1.81 5.19zm2.5-6.19h-3.17a15.7 15.7 0 00-1.34-5.32 8.02 8.02 0 014.51 5.32z"/>
                 </svg>
             </div>
-            <span class="nama-situs">Google</span>
+            <span class="nama-situs">DATA CS</span>
         </a>
 
-        <!-- 2. YOUTUBE -->
-        <a href="https://www.youtube.com" target="_blank" rel="noopener" class="pintasan">
-            <div class="ikon-situs col-youtube">
-                <svg viewBox="0 0 24 24" fill="white">
-                    <path d="M10 15l5.19-3L10 9v6zm11.56-5.03a2 2 0 00-1.41-1.42C18.88 8.25 12 8.25 12 8.25s-6.88 0-8.15.3A2 2 0 002.44 9.97C2.13 11.24 2.13 12 2.13 12s0 .76.31 2.03a2 2 0 001.41 1.42c1.27.3 8.15.3 8.15.3s6.88 0 8.15-.3a2 2 0 001.41-1.42c.31-1.27.31-2.03.31-2.03s0-.76-.3-2.03z"/>
+        <!-- SITUS 2 -->
+        <a href="https://alqurandigitalkolaka.blogspot.com/?m=1" target="_blank" rel="noopener" class="pintasan">
+            <div class="ikon-situs">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.93 9h-3.17a15.7 15.7 0 00-1.34-5.32A8.02 8.02 0 0119.93 11zM12 3.87c1.32 0 2.94.88 3.82 2.84a13.8 13.8 0 01-1.1 4.29H9.28a13.8 13.8 0 01-1.1-4.29C9.06 4.75 10.68 3.87 12 3.87zm-4.52.94a15.7 15.7 0 00-1.34 5.32H2.99A8.02 8.02 0 017.48 4.81zM2.99 13h3.15c.12 1.9.62 3.68 1.34 5.19A8.02 8.02 0 012.99 13zm4.52 6.19a15.7 15.7 0 01-1.34-5.19h5.66a15.7 15.7 0 01-1.34 5.19c-.88.08-1.82.08-2.98 0zm4.49.94c-1.32 0-2.94-.88-3.82-2.84a13.8 13.8 0 011.1-4.29h5.46a13.8 13.8 0 01-1.1 4.29c-.88 1.96-2.5 2.84-3.82 2.84zm4.52-.94a15.7 15.7 0 01-1.34-5.19h3.15a8.02 8.02 0 01-1.81 5.19zm2.5-6.19h-3.17a15.7 15.7 0 00-1.34-5.32 8.02 8.02 0 014.51 5.32z"/>
                 </svg>
             </div>
-            <span class="nama-situs">YouTube</span>
+            <span class="nama-situs">ALQURAN</span>
         </a>
 
-        <!-- 3. FACEBOOK -->
-        <a href="https://www.facebook.com" target="_blank" rel="noopener" class="pintasan">
-            <div class="ikon-situs col-facebook">
-                <svg viewBox="0 0 24 24" fill="white">
-                    <path d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.25-1.5 1.55-1.5h1.65V4.6C16.38 4.5 15.55 4.4 14.64 4.4 12.5 4.4 11 5.7 11 8.6v2.3H8.3V14H11v8h2.5z"/>
+        <!-- SITUS 3 -->
+        <a href="https://www.fa-digitalstudio.web.id/" target="_blank" rel="noopener" class="pintasan">
+            <div class="ikon-situs">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.93 9h-3.17a15.7 15.7 0 00-1.34-5.32A8.02 8.02 0 0119.93 11zM12 3.87c1.32 0 2.94.88 3.82 2.84a13.8 13.8 0 01-1.1 4.29H9.28a13.8 13.8 0 01-1.1-4.29C9.06 4.75 10.68 3.87 12 3.87zm-4.52.94a15.7 15.7 0 00-1.34 5.32H2.99A8.02 8.02 0 017.48 4.81zM2.99 13h3.15c.12 1.9.62 3.68 1.34 5.19A8.02 8.02 0 012.99 13zm4.52 6.19a15.7 15.7 0 01-1.34-5.19h5.66a15.7 15.7 0 01-1.34 5.19c-.88.08-1.82.08-2.98 0zm4.49.94c-1.32 0-2.94-.88-3.82-2.84a13.8 13.8 0 011.1-4.29h5.46a13.8 13.8 0 01-1.1 4.29c-.88 1.96-2.5 2.84-3.82 2.84zm4.52-.94a15.7 15.7 0 01-1.34-5.19h3.15a8.02 8.02 0 01-1.81 5.19zm2.5-6.19h-3.17a15.7 15.7 0 00-1.34-5.32 8.02 8.02 0 014.51 5.32z"/>
                 </svg>
             </div>
-            <span class="nama-situs">Facebook</span>
+            <span class="nama-situs">JASA PEMBUATAN WEB</span>
         </a>
 
-        <!-- 4. INSTAGRAM -->
-        <a href="https://www.instagram.com" target="_blank" rel="noopener" class="pintasan">
-            <div class="ikon-situs col-instagram">
-                <svg viewBox="0 0 24 24" fill="white">
-                    <path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.22.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.05.41 2.22.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.22-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.05.36-2.22.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.22-.41a3.7 3.7 0 01-1.38-.9 3.7 3.7 0 01-.9-1.38c-.16-.42-.36-1.05-.41-2.22C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.22.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.05-.36 2.22-.41C8.42 2.21 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.52.01-4.76.07-.88.04-1.36.19-1.67.31-.42.17-.72.37-1.06.71-.34.34-.54.64-.71 1.06-.12.31-.27.79-.31 1.67C3.41 8.48 3.4 8.85 3.4 12s.01 3.52.07 4.76c.04.88.19 1.36.31 1.67.17.42.37.72.71 1.06.34.34.64.54 1.06.71.31.12.79.27 1.67.31 1.24.06 1.61.07 4.76.07s3.52-.01 4.76-.07c.88-.04 1.36-.19 1.67-.31.42-.17.72-.37 1.06-.71.34-.34.54-.64.71-1.06.12-.31.27-.79.31-1.67.06-1.24.07-1.61.07-4.76s-.01-3.52-.07-4.76c-.04-.88-.19-1.36-.31-1.67a2.9 2.9 0 00-.71-1.06 2.9 2.9 0 00-1.06-.71c-.31-.12-.79-.27-1.67-.31C15.52 4.01 15.15 4 12 4zm0 3.1a4.9 4.9 0 110 9.8 4.9 4.9 0 010-9.8zm0 1.8a3.1 3.1 0 100 6.2 3.1 3.1 0 000-6.2zm5.15-1.9a1.15 1.15 0 110 2.3 1.15 1.15 0 010-2.3z"/>
+        <!-- SITUS 4 -->
+        <a href="https://nouracell.vercel.app/" target="_blank" rel="noopener" class="pintasan">
+            <div class="ikon-situs">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.93 9h-3.17a15.7 15.7 0 00-1.34-5.32A8.02 8.02 0 0119.93 11zM12 3.87c1.32 0 2.94.88 3.82 2.84a13.8 13.8 0 01-1.1 4.29H9.28a13.8 13.8 0 01-1.1-4.29C9.06 4.75 10.68 3.87 12 3.87zm-4.52.94a15.7 15.7 0 00-1.34 5.32H2.99A8.02 8.02 0 017.48 4.81zM2.99 13h3.15c.12 1.9.62 3.68 1.34 5.19A8.02 8.02 0 012.99 13zm4.52 6.19a15.7 15.7 0 01-1.34-5.19h5.66a15.7 15.7 0 01-1.34 5.19c-.88.08-1.82.08-2.98 0zm4.49.94c-1.32 0-2.94-.88-3.82-2.84a13.8 13.8 0 011.1-4.29h5.46a13.8 13.8 0 01-1.1 4.29c-.88 1.96-2.5 2.84-3.82 2.84zm4.52-.94a15.7 15.7 0 01-1.34-5.19h3.15a8.02 8.02 0 01-1.81 5.19zm2.5-6.19h-3.17a15.7 15.7 0 00-1.34-5.32 8.02 8.02 0 014.51 5.32z"/>
                 </svg>
             </div>
-            <span class="nama-situs">Instagram</span>
+            <span class="nama-situs">KASIR NOURA CELL</span>
         </a>
 
-        <!-- 5. TIKTOK -->
-        <a href="https://www.tiktok.com" target="_blank" rel="noopener" class="pintasan">
-            <div class="ikon-situs col-tiktok">
-                <svg viewBox="0 0 24 24" fill="white">
-                    <path d="M19.3 8.3a6.6 6.6 0 01-3.85-1.24V15.5a6.5 6.5 0 11-6.5-6.5c.3 0 .58.02.87.07v3.37a3.12 3.12 0 102.25 3V2h3.37c0 2.3 1.2 4.33 3.06 5.46l.8.47z"/>
+        <!-- SITUS 5 -->
+        <a href="https://cat-pppk-simulasi.vercel.app/" target="_blank" rel="noopener" class="pintasan">
+            <div class="ikon-situs">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.93 9h-3.17a15.7 15.7 0 00-1.34-5.32A8.02 8.02 0 0119.93 11zM12 3.87c1.32 0 2.94.88 3.82 2.84a13.8 13.8 0 01-1.1 4.29H9.28a13.8 13.8 0 01-1.1-4.29C9.06 4.75 10.68 3.87 12 3.87zm-4.52.94a15.7 15.7 0 00-1.34 5.32H2.99A8.02 8.02 0 017.48 4.81zM2.99 13h3.15c.12 1.9.62 3.68 1.34 5.19A8.02 8.02 0 012.99 13zm4.52 6.19a15.7 15.7 0 01-1.34-5.19h5.66a15.7 15.7 0 01-1.34 5.19c-.88.08-1.82.08-2.98 0zm4.49.94c-1.32 0-2.94-.88-3.82-2.84a13.8 13.8 0 011.1-4.29h5.46a13.8 13.8 0 01-1.1 4.29c-.88 1.96-2.5 2.84-3.82 2.84zm4.52-.94a15.7 15.7 0 01-1.34-5.19h3.15a8.02 8.02 0 01-1.81 5.19zm2.5-6.19h-3.17a15.7 15.7 0 00-1.34-5.32 8.02 8.02 0 014.51 5.32z"/>
                 </svg>
             </div>
-            <span class="nama-situs">TikTok</span>
+            <span class="nama-situs">SIMULASI CAT</span>
+        </a>
+
+        <!-- ✅ SITUS BARU NOMOR 6 -->
+        <a href="https://kontak-ten.vercel.app/" target="_blank" rel="noopener" class="pintasan">
+            <div class="ikon-situs">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.93 9h-3.17a15.7 15.7 0 00-1.34-5.32A8.02 8.02 0 0119.93 11zM12 3.87c1.32 0 2.94.88 3.82 2.84a13.8 13.8 0 01-1.1 4.29H9.28a13.8 13.8 0 01-1.1-4.29C9.06 4.75 10.68 3.87 12 3.87zm-4.52.94a15.7 15.7 0 00-1.34 5.32H2.99A8.02 8.02 0 017.48 4.81zM2.99 13h3.15c.12 1.9.62 3.68 1.34 5.19A8.02 8.02 0 012.99 13zm4.52 6.19a15.7 15.7 0 01-1.34-5.19h5.66a15.7 15.7 0 01-1.34 5.19c-.88.08-1.82.08-2.98 0zm4.49.94c-1.32 0-2.94-.88-3.82-2.84a13.8 13.8 0 011.1-4.29h5.46a13.8 13.8 0 01-1.1 4.29c-.88 1.96-2.5 2.84-3.82 2.84zm4.52-.94a15.7 15.7 0 01-1.34-5.19h3.15a8.02 8.02 0 01-1.81 5.19zm2.5-6.19h-3.17a15.7 15.7 0 00-1.34-5.32 8.02 8.02 0 014.51 5.32z"/>
+                </svg>
+            </div>
+            <span class="nama-situs">KONTAK</span>
         </a>
 
     </div>
 
+    <!-- ⚠️ SCRIPT JAVASCRIPT 100% SAMA PERSIS TIDAK DIUBAH SEKALI PUN -->
     <script>
         const formCari    = document.getElementById('formCari');
         const kolomCari   = document.getElementById('kolomCari');
