@@ -104,20 +104,18 @@
             box-shadow: 0 1px 6px rgba(32,33,36,.22);
         }
 
-        /* ✅ INI YANG BARU: IKON G KIRI BISA DIGANTI PNG SENDIRI */
         .ikon-gambar-kiri {
-            width:  clamp(20px, 4.2vw, 24px);   /* ukuran pas persis asli */
+            width:  clamp(20px, 4.2vw, 24px);
             height: clamp(20px, 4.2vw, 24px);
-            flex-shrink: 0;                     /* TIDAK AKAN KECIL SENDIRI */
+            flex-shrink: 0;
             display: block;
             object-fit: contain;
         }
-        /* SVG cadangan kalau PNG tidak ketemu */
         .ikon-svg-cadangan {
             width:  clamp(20px, 4.2vw, 24px);
             height: clamp(20px, 4.2vw, 24px);
             flex-shrink: 0;
-            display: none; /* disembunyikan dulu, muncul kalau PNG error */
+            display: none;
         }
 
         .kolom-teks {
@@ -161,11 +159,108 @@
             0%,100% { transform:scale(1); }
             50%     { transform:scale(1.15); }
         }
+
+        /* =========================================================
+           ✨ BARU: 5 PINTASAN SITUS DI BAWAH KOTAK PENCARIAN
+           ========================================================= */
+        @keyframes munculDariBawah {
+            0%   { opacity:0; transform: translateY(28px) scale(.92); }
+            100% { opacity:1; transform: translateY(0)    scale(1);   }
+        }
+
+        .wadah-pintasan {
+            width: 100%;
+            max-width: 620px;
+            margin-top: clamp(26px, 5.5vh, 44px);
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* 5 kolom di layar lebar */
+            gap: clamp(10px, 2.2vw, 18px);
+            justify-items: center;
+            padding: 0 6px;
+        }
+
+        /* RESPONSIF: otomatis ubah jumlah kolom */
+        @media (max-width: 560px){ .wadah-pintasan { grid-template-columns: repeat(3, 1fr); }}
+        @media (max-width: 360px){ .wadah-pintasan { grid-template-columns: repeat(2, 1fr); }}
+
+        .pintasan {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #3c4043;
+            padding: 10px 6px;
+            border-radius: 14px;
+            width: 100%;
+            max-width: 96px;
+            animation: munculDariBawah .65s cubic-bezier(.2,.8,.2,1) both;
+            transition: all .28s cubic-bezier(.2,.8,.2,1);
+            will-change: transform;
+        }
+        /* Muncul BERGILIRAN satu per satu */
+        .pintasan:nth-child(1){ animation-delay: 1.25s; }
+        .pintasan:nth-child(2){ animation-delay: 1.40s; }
+        .pintasan:nth-child(3){ animation-delay: 1.55s; }
+        .pintasan:nth-child(4){ animation-delay: 1.70s; }
+        .pintasan:nth-child(5){ animation-delay: 1.85s; }
+
+        .pintasan:hover {
+            transform: translateY(-7px) scale(1.04);
+            background: #ffffff;
+            box-shadow: 0 10px 22px rgba(0,0,0,.09), 0 4px 8px rgba(0,0,0,.05);
+            color:#202124;
+        }
+        .pintasan:active { transform: translateY(-2px) scale(.98); }
+
+        .ikon-situs {
+            width:  clamp(42px, 10vw, 56px);
+            height: clamp(42px, 10vw, 56px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 2px 6px rgba(0,0,0,.12);
+            transition: transform .3s ease, box-shadow .3s ease;
+            flex-shrink: 0;
+            overflow: hidden;
+            background: #fff;
+        }
+        .ikon-situs svg { width:58%; height:58%; }
+        .pintasan:hover .ikon-situs {
+            transform: rotate(-4deg) scale(1.08);
+            box-shadow: 0 6px 16px rgba(0,0,0,.18);
+        }
+
+        /* WARNA RESMI TIAP BRAND */
+        .col-google    { background: conic-gradient(#4285F4,#34A853,#FBBC05,#EA4335,#4285F4); }
+        .col-youtube   { background: #FF0000; }
+        .col-facebook  { background: #1877F2; }
+        .col-instagram { background: linear-gradient(135deg,#833AB4,#FD1D1D,#F77737); }
+        .col-tiktok    { background: #000000; }
+
+        .nama-situs {
+            font-size: clamp(11.5px, 2.6vw, 13px);
+            font-weight: 500;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+
+        /* Kalau mau ganti pakai PNG sendiri */
+        .ikon-situs img {
+            width:100%; height:100%;
+            object-fit: cover;
+            display:block;
+        }
     </style>
 </head>
 <body>
 
-    <!-- LOGO BESAR — BISA DIGANTI PNG SENDIRI -->
+    <!-- LOGO BESAR -->
     <div class="wadah-logo">
         <img 
             src="20260710_104634.png" 
@@ -178,21 +273,16 @@
         </h1>
     </div>
 
+    <!-- KOTAK PENCARIAN -->
     <form class="form-cari" id="formCari" action="https://www.google.com/search" method="GET" target="_self">
 
-        <!-- ⭐ IKON YANG DILINGKARI — SEKARANG BISA PAKAI PNG SENDIRI ⭐ -->
-        <!-- Ganti nama file di bawah sesuai gambarmu, contoh: g-icon.png -->
         <img 
             src="20260710_105158.png" 
             alt="G" 
             class="ikon-gambar-kiri"
             id="ikonGKiri"
-            onerror="
-                this.style.display='none';
-                document.getElementById('ikonGCadangan').style.display='block';
-            "
+            onerror="this.style.display='none';document.getElementById('ikonGCadangan').style.display='block'"
         >
-        <!-- Kalau PNG tidak ada, otomatis muncul yang ini -->
         <svg id="ikonGCadangan" class="ikon-svg-cadangan" viewBox="0 0 24 24">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
             <path fill="#EA4335" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -206,14 +296,12 @@
             autocomplete="off" autofocus
         >
 
-        <!-- 🎤 MIC -->
         <button type="button" class="tombol" id="tombolMic" title="Penelusuran Suara">
             <svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
             </svg>
         </button>
 
-        <!-- 📷 KAMERA/LENS DI DALAM -->
         <button type="button" class="tombol" id="tombolKamera" title="Google Lens">
             <svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 4.5c-1.74 0-3.28.98-4.11 2.44H5.5c-.83 0-1.5.67-1.5 1.5v9c0 .83.67 1.5 1.5 1.5h13c.83 0 1.5-.67 1.5-1.5v-9c0-.83-.67-1.5-1.5-1.5h-2.39C15.28 5.48 13.74 4.5 12 4.5zm0 2c1.04 0 1.97.59 2.45 1.5H9.55c.48-.91 1.41-1.5 2.45-1.5zm0 3.25a3.75 3.75 0 1 1 0 7.5 3.75 3.75 0 0 1 0-7.5zm0 2a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5z"/>
@@ -222,6 +310,61 @@
         <input type="file" id="pilihGambar" class="input-gambar" accept="image/*" capture="environment">
 
     </form>
+
+    <!-- ⭐⭐⭐ 5 PINTASAN SITUS KEREN ⭐⭐⭐ -->
+    <div class="wadah-pintasan">
+
+        <!-- 1. GOOGLE -->
+        <a href="https://www.google.com" target="_blank" rel="noopener" class="pintasan">
+            <div class="ikon-situs col-google">
+                <svg viewBox="0 0 24 24" fill="white">
+                    <path d="M21.35 11.1H12v2.93h5.34c-.23 1.5-1.72 4.4-5.34 4.4-3.21 0-5.83-2.66-5.83-5.93S8.79 6.57 12 6.57c1.83 0 3.06.78 3.76 1.45l2.56-2.47C16.7 3.89 14.55 3 12 3 6.98 3 3 6.98 3 12s3.98 9 9 9c5.2 0 8.64-3.65 8.64-8.78 0-.59-.06-1.04-.14-1.12z"/>
+                </svg>
+            </div>
+            <span class="nama-situs">Google</span>
+        </a>
+
+        <!-- 2. YOUTUBE -->
+        <a href="https://www.youtube.com" target="_blank" rel="noopener" class="pintasan">
+            <div class="ikon-situs col-youtube">
+                <svg viewBox="0 0 24 24" fill="white">
+                    <path d="M10 15l5.19-3L10 9v6zm11.56-5.03a2 2 0 00-1.41-1.42C18.88 8.25 12 8.25 12 8.25s-6.88 0-8.15.3A2 2 0 002.44 9.97C2.13 11.24 2.13 12 2.13 12s0 .76.31 2.03a2 2 0 001.41 1.42c1.27.3 8.15.3 8.15.3s6.88 0 8.15-.3a2 2 0 001.41-1.42c.31-1.27.31-2.03.31-2.03s0-.76-.3-2.03z"/>
+                </svg>
+            </div>
+            <span class="nama-situs">YouTube</span>
+        </a>
+
+        <!-- 3. FACEBOOK -->
+        <a href="https://www.facebook.com" target="_blank" rel="noopener" class="pintasan">
+            <div class="ikon-situs col-facebook">
+                <svg viewBox="0 0 24 24" fill="white">
+                    <path d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.25-1.5 1.55-1.5h1.65V4.6C16.38 4.5 15.55 4.4 14.64 4.4 12.5 4.4 11 5.7 11 8.6v2.3H8.3V14H11v8h2.5z"/>
+                </svg>
+            </div>
+            <span class="nama-situs">Facebook</span>
+        </a>
+
+        <!-- 4. INSTAGRAM -->
+        <a href="https://www.instagram.com" target="_blank" rel="noopener" class="pintasan">
+            <div class="ikon-situs col-instagram">
+                <svg viewBox="0 0 24 24" fill="white">
+                    <path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.22.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.05.41 2.22.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.22-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.05.36-2.22.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.22-.41a3.7 3.7 0 01-1.38-.9 3.7 3.7 0 01-.9-1.38c-.16-.42-.36-1.05-.41-2.22C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.22.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.05-.36 2.22-.41C8.42 2.21 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.52.01-4.76.07-.88.04-1.36.19-1.67.31-.42.17-.72.37-1.06.71-.34.34-.54.64-.71 1.06-.12.31-.27.79-.31 1.67C3.41 8.48 3.4 8.85 3.4 12s.01 3.52.07 4.76c.04.88.19 1.36.31 1.67.17.42.37.72.71 1.06.34.34.64.54 1.06.71.31.12.79.27 1.67.31 1.24.06 1.61.07 4.76.07s3.52-.01 4.76-.07c.88-.04 1.36-.19 1.67-.31.42-.17.72-.37 1.06-.71.34-.34.54-.64.71-1.06.12-.31.27-.79.31-1.67.06-1.24.07-1.61.07-4.76s-.01-3.52-.07-4.76c-.04-.88-.19-1.36-.31-1.67a2.9 2.9 0 00-.71-1.06 2.9 2.9 0 00-1.06-.71c-.31-.12-.79-.27-1.67-.31C15.52 4.01 15.15 4 12 4zm0 3.1a4.9 4.9 0 110 9.8 4.9 4.9 0 010-9.8zm0 1.8a3.1 3.1 0 100 6.2 3.1 3.1 0 000-6.2zm5.15-1.9a1.15 1.15 0 110 2.3 1.15 1.15 0 010-2.3z"/>
+                </svg>
+            </div>
+            <span class="nama-situs">Instagram</span>
+        </a>
+
+        <!-- 5. TIKTOK -->
+        <a href="https://www.tiktok.com" target="_blank" rel="noopener" class="pintasan">
+            <div class="ikon-situs col-tiktok">
+                <svg viewBox="0 0 24 24" fill="white">
+                    <path d="M19.3 8.3a6.6 6.6 0 01-3.85-1.24V15.5a6.5 6.5 0 11-6.5-6.5c.3 0 .58.02.87.07v3.37a3.12 3.12 0 102.25 3V2h3.37c0 2.3 1.2 4.33 3.06 5.46l.8.47z"/>
+                </svg>
+            </div>
+            <span class="nama-situs">TikTok</span>
+        </a>
+
+    </div>
 
     <script>
         const formCari    = document.getElementById('formCari');
